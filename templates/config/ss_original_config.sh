@@ -8,8 +8,9 @@ ss_config_standalone(){
 	    "timeout":300,
 	    "user":"nobody",
 	    "method":"${shadowsockscipher}",
-	    "nameserver":"8.8.8.8",
-	    "mode":"tcp_and_udp"
+	    "nameserver":"223.5.5.5,114.114.114.114,119.29.29.29",
+	    "mode":"tcp_and_udp",
+	    "nofile": 51200
 	}
 	EOF
 }
