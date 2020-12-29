@@ -919,9 +919,9 @@ EOF
 
     # use Google nameservers
     cat /dev/null > /etc/resolv.conf 
-    echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
-    echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
-    echo 'nameserver 1.1.1.1' >> /etc/resolv.conf
+    echo 'nameserver 223.5.5.5' >> /etc/resolv.conf
+    echo 'nameserver 114.114.114.114' >> /etc/resolv.conf
+    echo 'nameserver 119.29.29.29' >> /etc/resolv.conf
     chattr +i /etc/resolv.conf    
 }
 
