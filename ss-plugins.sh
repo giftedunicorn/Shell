@@ -696,7 +696,7 @@ install_prepare(){
         simple-tls
     )
 
-    check_script_update "notShow"
+    # check_script_update "notShow"
     improt_package "prepare" "shadowsocks_prepare.sh"
     choose_ss_install_version
     install_prepare_port
