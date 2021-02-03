@@ -15,8 +15,7 @@ CUR_DIR=$( pwd )
 
 # base url
 methods="Online"
-# BASE_URL="https://github.com/loyess/Shell/raw/master"
-BASE_URL="https://raw.staticdn.net/giftedunicorn/Shell/master"
+BASE_URL="https://github.com/loyess/Shell/raw/master"
 if [ -e plugins ] && [ -e prepare ] && [ -e service ] && [ -e templates ] && [ -e tools ] && [ -e utils ]; then
     methods="Local"
     BASE_URL="." 
