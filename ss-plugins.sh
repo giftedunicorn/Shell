@@ -357,7 +357,7 @@ improt_package(){
     fi
     
     if [[ ${methods} == "Online" ]]; then
-        source <(curl -sL ${BASE_URL}/${package}/${sh_file})
+        source <(curl -L ${BASE_URL}/${package}/${sh_file})
     else
         cd ${CUR_DIR}
         source ${BASE_URL}/${package}/${sh_file}
