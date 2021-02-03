@@ -15,7 +15,8 @@ CUR_DIR=$( pwd )
 
 # base url
 methods="Online"
-BASE_URL="https://github.com/giftedunicorn/Shell/raw/cn"
+# BASE_URL="https://github.com/giftedunicorn/Shell/raw/cn"
+BASE_URL="https://raw.staticdn.net/giftedunicorn/Shell/cn"
 if [ -e plugins ] && [ -e prepare ] && [ -e service ] && [ -e templates ] && [ -e tools ] && [ -e utils ]; then
     methods="Local"
     BASE_URL="." 
@@ -716,7 +717,7 @@ install_prepare(){
         gost-plugin
     )
 
-    check_script_update "notShow"
+    # check_script_update "notShow"
     improt_package "prepare" "shadowsocks_prepare.sh"
     choose_ss_install_version
     install_prepare_port
