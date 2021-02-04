@@ -953,11 +953,12 @@ EOF
     sysctl -p
 
     # use Google nameservers
+    chattr -i /etc/resolv.conf
     cat /dev/null > /etc/resolv.conf 
     echo 'nameserver 223.5.5.5' >> /etc/resolv.conf
     echo 'nameserver 114.114.114.114' >> /etc/resolv.conf
     echo 'nameserver 119.29.29.29' >> /etc/resolv.conf
-    chattr +i /etc/resolv.conf    
+    chattr +i /etc/resolv.conf
 }
 
 install_cleanup(){
