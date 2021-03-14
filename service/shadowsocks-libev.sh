@@ -32,7 +32,7 @@ if [ ! -d "$(dirname ${LOG})" ]; then
 fi
 
 check_pid(){
-	get_pid=`ps -ef |grep -v grep | grep ss-server |awk '{print $2}'`
+    get_pid=`ps -ef |grep -v grep | grep ss-server |awk '{print $2}'`
 }
 
 check_pid
@@ -90,7 +90,8 @@ do_start() {
         return 0
     fi
     ulimit -n 51200
-    nohup $DAEMON -c $CONF -v > $LOG 2>&1 &
+    # nohup $DAEMON -c $CONF -v > $LOG 2>&1 &
+    nohup $DAEMON -c $CONF > /dev/null 2>&1 &
     check_pid
     echo $get_pid > $PID_FILE
     if check_running; then
