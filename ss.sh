@@ -324,7 +324,7 @@ configSS(){
     "password":"${PASSWORD}",
     "timeout":600,
     "method":"${METHOD}",
-    "nameserver":"8.8.8.8",
+    "nameserver":"223.5.5.5,114.114.114.114",
     "mode":"tcp_and_udp",
     "fast_open":false
 }
@@ -481,6 +481,8 @@ install() {
 
     start
     showInfo
+    
+    optimization
 
     bbrReboot
 }
@@ -578,6 +580,77 @@ showLog() {
     fi
     journalctl -xen --no-pager -u ${NAME}
 }
+
+optimization(){
+    ulimit -n 51200
+    echo "Running system optimization..."
+    cat /dev/null > /etc/modules-load.d/modules.conf
+    cat /dev/null > /etc/security/limits.conf
+    cat /dev/null > /etc/sysctl.conf
+    echo "bbr" >> /etc/modules-load.d/modules.conf
+    cat >> /etc/security/limits.conf << EOF
+    * soft nofile 51200
+    * hard nofile 51200
+EOF
+
+    cat >> /etc/sysctl.conf << EOF
+        # max open files
+        fs.file-max = 51200
+        # max read buffer
+        net.core.rmem_max = 67108864
+        # max write buffer
+        net.core.wmem_max = 67108864
+        # default read buffer
+        net.core.rmem_default = 65536
+        # default write buffer
+        net.core.wmem_default = 65536
+        # max processor input queue
+        net.core.netdev_max_backlog = 4096
+        # max backlog
+        net.core.somaxconn = 4096
+        # resist SYN flood attacks
+        net.ipv4.tcp_syncookies = 1
+        # reuse timewait sockets when safe
+        net.ipv4.tcp_tw_reuse = 1
+        # turn off fast timewait sockets recycling
+        net.ipv4.tcp_tw_recycle = 0
+        # short FIN timeout
+        net.ipv4.tcp_fin_timeout = 30
+        # short keepalive time
+        net.ipv4.tcp_keepalive_time = 1200
+        # outbound port range
+        net.ipv4.ip_local_port_range = 10000 65000
+        # max SYN backlog
+        net.ipv4.tcp_max_syn_backlog = 4096
+        # max timewait sockets held by system simultaneously
+        net.ipv4.tcp_max_tw_buckets = 5000
+        # turn on TCP Fast Open on both client and server side
+        net.ipv4.tcp_fastopen = 3
+        # TCP receive buffer
+        net.ipv4.tcp_rmem = 4096 87380 67108864
+        # TCP write buffer
+        net.ipv4.tcp_wmem = 4096 65536 67108864
+        # turn on path MTU discovery
+        net.ipv4.tcp_mtu_probing = 1
+        # for high-latency network
+        # net.ipv4.tcp_congestion_control = hybla
+        # for low-latency network, use cubic instead
+        # net.ipv4.tcp_congestion_control = cubic
+        net.core.default_qdisc = fq
+        # net.ipv4.tcp_congestion_control = bbr
+        # net.ipv4.tcp_congestion_control=tsunami
+EOF
+    sysctl -p
+
+    # use Google nameservers
+    chattr -i /etc/resolv.conf
+    cat /dev/null > /etc/resolv.conf 
+    echo 'nameserver 223.5.5.5' >> /etc/resolv.conf
+    echo 'nameserver 114.114.114.114' >> /etc/resolv.conf
+    echo 'nameserver 119.29.29.29' >> /etc/resolv.conf
+    chattr +i /etc/resolv.conf
+}
+
 
 menu() {
     clear
